@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>You first Spring application</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="/api/cna/student/add" method="POST">
+  <p>Let's add a student.</p>
+  <div>
+    <label for="firstName">First name:</label>
+    <input name="firstName" id="firstName" value="Homer">
+  </div>
+  <div>
+    <label for="lastName">Last name:</label>
+    <input name="lastName" id="lastName" value="Simpson">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input name="email" id="email" value="test@email.com">
+  </div>
+  <div>
+    <label for="address">Address:</label>
+    <input name="address" id="address" value="123 Fake Street">
+  </div>
+  <div>
+    <label for="city">City:</label>
+    <input name="city" id="city" value="Imaginary City">
+  </div>
+  <div>
+    <label for="postal">Postal Code:</label>
+    <input name="postal" id="postal" value="A1H 2B3">
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <input name="phone" id="phone" value="123-456-7890">
+  </div>
+  <div>
+    <button>Add Student</button>
+  </div>
+</form>
+<form action="/api/cna/student/list" method="GET">
+  <button>List Students</button>
+</form>
+<br>
+<form action="/api/cna/course/add" method="POST">
+  <p>Let's add a Course.</p>
+  <div>
+    <label for="courseName">Course name:</label>
+    <input name="courseName" id="courseName" value="Homer">
+  </div>
+  <div>
+    <label for="courseNumber">Course number:</label>
+    <input name="courseNumber" id="courseNumber" value="12">
+  </div>
+  <div>
+    <label for="capacity">Capacity:</label>
+    <input name="capacity" id="capacity" value="40">
+  </div>
+  <div>
+    <button>Add Course</button>
+  </div>
+</form>
+
+<form action="/api/cna/course/list" method="GET">
+  <button>List Courses</button>
+</form>
+
+<form action=`/api/cna/course/find/{courseID}` method="GET">
+  <div>
+    <label for="courseID">Course ID:</label>
+    <input name="courseID" id="courseID" value="">
+  </div>
+  <button>List Course By ID:</button>
+</form>
+
+</body>
+</html>
