@@ -31,6 +31,15 @@ public class GradesController {
     public Grades findGradesBygid(@PathVariable Integer gid) {
         return gradesRepository.findGradesBygid(gid);
     }
+
+    @GetMapping("/find/course/{courseID}")
+    public Iterable<Grades> findGradesByCourseID(@PathVariable Integer courseID) {
+        return gradesRepository.findGradesByCourseID(courseID);
+    }
+    @GetMapping("/find/student/{studentID}")
+    public Iterable<Grades> findGradesByStudentID(@PathVariable Integer studentID) {
+        return gradesRepository.findGradesByStudentID(studentID);
+    }
     @DeleteMapping("/find/{gid}")
     public void deleteCourseByCourseID(@PathVariable("gid") Integer gid) {
         gradesRepository.deleteById(gid);
