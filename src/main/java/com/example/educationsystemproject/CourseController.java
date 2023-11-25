@@ -31,4 +31,21 @@ public class CourseController {
     public Course findCourseByCourseID(@PathVariable Integer courseID) {
         return courseRepository.findCourseByCourseID(courseID);
     }
+    @DeleteMapping("/find/{courseID}")
+    public void deleteCourseByCourseID(@PathVariable("courseID") Integer courseID) {
+        courseRepository.deleteById(courseID);
+    }
+    @PutMapping("/find/{courseID}")
+    public String updateCourseByCourseID(@PathVariable("courseID") Integer courseID,
+                            @RequestParam String courseName,
+                            @RequestParam String courseNumber,
+                            @RequestParam String capacity) {
+        Course course = courseRepository.findById(courseID)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id: "+courseID));
+        course.setCourseName(courseName);
+        course.setCourseNumber(courseNumber);
+        course.setCapacity(capacity);
+        courseRepository.save(course);
+        return "Updated course!";
+    }
 }
