@@ -12,7 +12,7 @@ public class GradesController {
     private GradesRepository gradesRepository;
 
     @PostMapping("/add")
-    public String addCourse(@RequestParam Integer studentID,
+    public String addGrade(@RequestParam Integer studentID,
                             @RequestParam Integer courseID,
                             @RequestParam String grade) {
         Grades grades = new Grades();
@@ -20,7 +20,7 @@ public class GradesController {
         grades.setCourseID(courseID);
         grades.setGrade(grade);
         gradesRepository.save(grades);
-        return "Added new course to database!";
+        return "Added new grade to database!";
     }
 
     @GetMapping("/list")
