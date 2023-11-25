@@ -28,8 +28,8 @@ public class GradesController {
         return gradesRepository.findAll();
     }
     @GetMapping("/find/{gid}")
-    public Grades findGradesByGID(@PathVariable Integer gid) {
-        return gradesRepository.findGradesByGID(gid);
+    public Grades findGradesBygid(@PathVariable Integer gid) {
+        return gradesRepository.findGradesBygid(gid);
     }
     @DeleteMapping("/find/{gid}")
     public void deleteCourseByCourseID(@PathVariable("gid") Integer gid) {
