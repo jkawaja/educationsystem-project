@@ -27,15 +27,15 @@ public class CourseController {
     public Iterable<Course> getCourses() {
         return courseRepository.findAll();
     }
-    @GetMapping("/find/{courseID}")
+    @GetMapping("/view/{courseID}")
     public Course findCourseByCourseID(@PathVariable Integer courseID) {
         return courseRepository.findCourseByCourseID(courseID);
     }
-    @DeleteMapping("/find/{courseID}")
+    @DeleteMapping("/delete/{courseID}")
     public void deleteCourseByCourseID(@PathVariable("courseID") Integer courseID) {
         courseRepository.deleteById(courseID);
     }
-    @PutMapping("/find/{courseID}")
+    @PutMapping("/modify/{courseID}")
     public String updateCourseByCourseID(@PathVariable("courseID") Integer courseID,
                             @RequestParam String courseName,
                             @RequestParam String courseNumber,

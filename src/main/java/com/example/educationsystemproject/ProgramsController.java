@@ -25,16 +25,16 @@ public class ProgramsController {
     public Iterable<Programs> getPrograms() {
         return programsRepository.findAll();
     }
-    @GetMapping("/find/{pid}")
+    @GetMapping("/view/{pid}")
     public Programs findProgramsBypid(@PathVariable Integer pid) {
         return programsRepository.findProgramsBypid(pid);
     }
-    @DeleteMapping("/find/{pid}")
+    @DeleteMapping("/delete/{pid}")
     public String deleteProgramBypid(@PathVariable("pid") Integer pid) {
         programsRepository.deleteById(pid);
         return "Program deleted from database";
     }
-    @PutMapping("/find/{pid}")
+    @PutMapping("/modify/{pid}")
     public String updateProgramBypid(@PathVariable("pid") Integer pid,
                                         @RequestParam String programName,
                                         @RequestParam String campus) {

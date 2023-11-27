@@ -25,24 +25,24 @@ public class EnrollmentController {
     public Iterable<Enrollment> getEnrollment() {
         return enrollmentRepository.findAll();
     }
-    @GetMapping("/find/{eid}")
+    @GetMapping("/list/{eid}")
     public Enrollment findEnrollmentByEID(@PathVariable Integer eid) {
         return enrollmentRepository.findEnrollmentByeid(eid);
     }
-    @GetMapping("/find/course/{courseID}")
+    @GetMapping("/list/course/{courseID}")
     public Iterable<Enrollment> findEnrollmentByCourseID(@PathVariable Integer courseID) {
         return enrollmentRepository.findEnrollmentByCourseID(courseID);
     }
-    @GetMapping("/find/student/{studentID}")
+    @GetMapping("/list/student/{studentID}")
     public Iterable<Enrollment> findEnrollmentByStudentID(@PathVariable Integer studentID) {
         return enrollmentRepository.findEnrollmentByStudentID(studentID);
     }
-    @DeleteMapping("/find/{eid}")
+    @DeleteMapping("/delete/{eid}")
     public String deleteEnrollmentByeid(@PathVariable("eid") Integer eid) {
         enrollmentRepository.deleteById(eid);
         return "Enrollment deleted from database";
     }
-    @PutMapping("/find/{eid}")
+    @PutMapping("/modify/{eid}")
     public String updateEnrollmentByeid(@PathVariable("eid") Integer eid,
                                     @RequestParam Integer courseID,
                                     @RequestParam Integer studentID) {
