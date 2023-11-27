@@ -36,16 +36,16 @@ public class StudentController {
     public Iterable<Student> getStudents() {
         return studentRepository.findAll();
     }
-    @GetMapping("/find/{studentID}")
+    @GetMapping("/view/{studentID}")
     public Student findStudentByStudentID(@PathVariable Integer studentID) {
         return studentRepository.findStudentByStudentID(studentID);
     }
-    @DeleteMapping("/find/{studentID}")
+    @DeleteMapping("/delete/{studentID}")
     public String deleteStudentByStudentID(@PathVariable("studentID") Integer studentID) {
         studentRepository.deleteById(studentID);
         return "Student deleted from database";
     }
-    @PutMapping("/find/{studentID}")
+    @PutMapping("/modify/{studentID}")
     public String updateStudentByStudentID(@PathVariable("studentID") Integer studentID,
                                          @RequestParam String firstName,
                                          @RequestParam String lastName,
