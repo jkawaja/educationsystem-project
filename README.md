@@ -9,15 +9,15 @@ development. The Project uses the following dependencies on project creation:
 
 **Requirements:**
 Operational
-• CNA will require an ability to test the provided API. CNA technical staff that will evaluate the
+* CNA will require an ability to test the provided API. CNA technical staff that will evaluate the
 system will complete all testing with Postman.
-• Your database should be called educationsystem, and all tables required should be contained
+* Your database should be called educationsystem, and all tables required should be contained
 within.
-• The structure and creation of your tables should be created and managed by Spring
+* The structure and creation of your tables should be created and managed by Spring
 components. Details of required attributes and/or relationships are outlined below.
-• The application should be accessible at this URI (obviously your server name, port, and
+* The application should be accessible at this URI (obviously your server name, port, and
 application/project name will come before this): /api/cna/
-• Ensure that you use the naming conventions that are described below. As these are what other
+* Ensure that you use the naming conventions that are described below. As these are what other
 systems will use to interface with your API.
-• Create a script which populates your database with data to test with. Ensure at least 5 students,
+* Create a script which populates your database with data to test with. Ensure at least 5 students,
 2 Courses, 2 Programs, 5 Enrolments and 5 Grades are inserted.
