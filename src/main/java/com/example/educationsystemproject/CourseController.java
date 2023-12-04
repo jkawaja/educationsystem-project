@@ -12,23 +12,34 @@ public class CourseController {
     private CourseRepository courseRepository;
 
     @PostMapping("/add")
-    public String addCourse(@RequestParam String courseName,
-                             @RequestParam String courseNumber,
-                             @RequestParam String capacity) {
-        Course course = new Course();
-        course.setCourseName(courseName);
-        course.setCourseNumber(courseNumber);
-        course.setCapacity(capacity);
-        courseRepository.save(course);
-        return "Added new course to database!";
+    public Course addCourse(@RequestBody Course course) {
+        return courseRepository.save(course);
     }
 
     @GetMapping("/list")
     public Iterable<Course> getCourses() {
         return courseRepository.findAll();
     }
-    @GetMapping("/find/{courseID}")
+    @GetMapping("/view/{courseID}")
     public Course findCourseByCourseID(@PathVariable Integer courseID) {
         return courseRepository.findCourseByCourseID(courseID);
+    }
+    @DeleteMapping("/delete/{courseID}")
+    public String deleteCourseByCourseID(@PathVariable("courseID") Integer courseID) {
+        courseRepository.deleteById(courseID);
+        return "Course deleted from database";
+    }
+    @PutMapping("/modify/{courseID}")
+    public Course updateCourseByCourseID(@PathVariable("courseID") Integer courseID,
+                            @RequestBody Course course) {
+        Course updatedCourse;
+        updatedCourse = course;
+        course = courseRepository.findById(courseID)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id: "+courseID));
+        course.setCapacity(updatedCourse.getCapacity());
+        course.setYear(updatedCourse.getYear());
+        course.setSemester(updatedCourse.getSemester());
+        course.setPid(updatedCourse.getPid());
+        return courseRepository.save(course);
     }
 }

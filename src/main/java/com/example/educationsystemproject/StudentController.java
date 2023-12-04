@@ -3,6 +3,7 @@ package com.example.educationsystemproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,32 +13,35 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @PostMapping("/add")
-    public String addStudent(@RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam String email,
-                             @RequestParam String address,
-                             @RequestParam String city,
-                             @RequestParam String postal,
-                             @RequestParam String phone) {
-        Student student = new Student();
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setEmail(email);
-        student.setAddress(address);
-        student.setCity(city);
-        student.setPostal(postal);
-        student.setPhone(phone);
-        studentRepository.save(student);
-        return "Added new student to database!";
+    public Student addStudent(@RequestBody Student student) {
+        return studentRepository.save(student);
     }
 
     @GetMapping("/list")
     public Iterable<Student> getStudents() {
         return studentRepository.findAll();
     }
-    @GetMapping("/find/{studentID}")
+    @GetMapping("/view/{studentID}")
     public Student findStudentByStudentID(@PathVariable Integer studentID) {
         return studentRepository.findStudentByStudentID(studentID);
     }
-
+    @DeleteMapping("/delete/{studentID}")
+    public String deleteStudentByStudentID(@PathVariable("studentID") Integer studentID) {
+        studentRepository.deleteById(studentID);
+        return "Student deleted from database";
+    }
+    @PutMapping("/modify/{studentID}")
+    public Student updateStudentByStudentID(@PathVariable("studentID") Integer studentID,
+                                         @RequestBody Student student) {
+        Student updatedStudent;
+        updatedStudent = student;
+        student = studentRepository.findById(studentID)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id: "+studentID));
+        student.setEmail(updatedStudent.getEmail());
+        student.setAddress(updatedStudent.getAddress());
+        student.setCity(updatedStudent.getCity());
+        student.setPostal(updatedStudent.getPostal());
+        student.setPhone(updatedStudent.getPhone());
+        return studentRepository.save(student);
+    }
 }
