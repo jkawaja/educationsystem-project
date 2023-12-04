@@ -12,28 +12,23 @@ public class EnrollmentController {
     private EnrollmentRepository enrollmentRepository;
 
     @PostMapping("/add")
-    public String addEnrollment(@RequestParam Integer studentID,
-                           @RequestParam Integer courseID) {
-        Enrollment enrollment = new Enrollment();
-        enrollment.setStudentID(studentID);
-        enrollment.setCourseID(courseID);
-        enrollmentRepository.save(enrollment);
-        return "Added new enrollment to database!";
+    public Enrollment addEnrollment(@RequestBody Enrollment enrollment) {
+        return enrollmentRepository.save(enrollment);
     }
 
     @GetMapping("/list")
     public Iterable<Enrollment> getEnrollment() {
         return enrollmentRepository.findAll();
     }
-    @GetMapping("/list/{eid}")
+    @GetMapping("/view/{eid}")
     public Enrollment findEnrollmentByEID(@PathVariable Integer eid) {
         return enrollmentRepository.findEnrollmentByeid(eid);
     }
-    @GetMapping("/list/course/{courseID}")
+    @GetMapping("/view/course/{courseID}")
     public Iterable<Enrollment> findEnrollmentByCourseID(@PathVariable Integer courseID) {
         return enrollmentRepository.findEnrollmentByCourseID(courseID);
     }
-    @GetMapping("/list/student/{studentID}")
+    @GetMapping("/view/student/{studentID}")
     public Iterable<Enrollment> findEnrollmentByStudentID(@PathVariable Integer studentID) {
         return enrollmentRepository.findEnrollmentByStudentID(studentID);
     }
@@ -43,14 +38,14 @@ public class EnrollmentController {
         return "Enrollment deleted from database";
     }
     @PutMapping("/modify/{eid}")
-    public String updateEnrollmentByeid(@PathVariable("eid") Integer eid,
-                                    @RequestParam Integer courseID,
-                                    @RequestParam Integer studentID) {
-        Enrollment enrollment = enrollmentRepository.findById(eid)
+    public Enrollment updateEnrollmentByeid(@PathVariable("eid") Integer eid,
+                                    @RequestBody Enrollment enrollment) {
+        Enrollment updatedEnrollment;
+        updatedEnrollment = enrollment;
+        enrollment = enrollmentRepository.findById(eid)
                 .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found for this id: "+eid));
-        enrollment.setCourseID(courseID);
-        enrollment.setStudentID(studentID);
-        enrollmentRepository.save(enrollment);
-        return "Updated Enrollment!";
+        enrollment.setCourseID(updatedEnrollment.getCourseID());
+        enrollment.setStudentID(updatedEnrollment.getStudentID());
+        return enrollmentRepository.save(enrollment);
     }
 }
