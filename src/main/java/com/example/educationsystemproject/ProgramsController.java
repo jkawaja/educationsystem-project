@@ -12,13 +12,8 @@ public class ProgramsController {
     private ProgramsRepository programsRepository;
 
     @PostMapping("/add")
-    public String addEnrollment(@RequestParam String programName,
-                                @RequestParam String campus) {
-        Programs programs = new Programs();
-        programs.setProgramName(programName);
-        programs.setCampus(campus);
-        programsRepository.save(programs);
-        return "Added new enrollment to database!";
+    public Programs addEnrollment(@RequestBody Programs programs) {
+        return programsRepository.save(programs);
     }
 
     @GetMapping("/list")
@@ -35,14 +30,14 @@ public class ProgramsController {
         return "Program deleted from database";
     }
     @PutMapping("/modify/{pid}")
-    public String updateProgramBypid(@PathVariable("pid") Integer pid,
-                                        @RequestParam String programName,
-                                        @RequestParam String campus) {
-        Programs programs = programsRepository.findById(pid)
+    public Programs updateProgramBypid(@PathVariable("pid") Integer pid,
+                                        @RequestBody Programs programs) {
+        Programs updatedPrograms;
+        updatedPrograms = programs;
+        programs = programsRepository.findById(pid)
                 .orElseThrow(() -> new ResourceNotFoundException("Program not found for this id: "+pid));
-        programs.setProgramName(programName);
-        programs.setCampus(campus);
-        programsRepository.save(programs);
-        return "Updated Programs!";
+        programs.setProgramName(updatedPrograms.getProgramName());
+        programs.setCampus(updatedPrograms.getCampus());
+        return programsRepository.save(programs);
     }
 }
