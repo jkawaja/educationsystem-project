@@ -12,45 +12,40 @@ public class GradesController {
     private GradesRepository gradesRepository;
 
     @PostMapping("/add")
-    public String addGrade(@RequestParam Integer studentID,
-                            @RequestParam Integer courseID,
-                            @RequestParam String grade) {
-        Grades grades = new Grades();
-        grades.setStudentID(studentID);
-        grades.setCourseID(courseID);
-        grades.setGrade(grade);
-        gradesRepository.save(grades);
-        return "Added new grade to database!";
+    public Grades addGrade(@RequestBody Grades grades) {
+        return gradesRepository.save(grades);
     }
 
     @GetMapping("/list")
     public Iterable<Grades> getGrades() {
         return gradesRepository.findAll();
     }
-    @GetMapping("/find/{gid}")
+    @GetMapping("/view/{gid}")
     public Grades findGradesBygid(@PathVariable Integer gid) {
         return gradesRepository.findGradesBygid(gid);
     }
 
-    @GetMapping("/find/course/{courseID}")
+    @GetMapping("/view/course/{courseID}")
     public Iterable<Grades> findGradesByCourseID(@PathVariable Integer courseID) {
         return gradesRepository.findGradesByCourseID(courseID);
     }
-    @GetMapping("/find/student/{studentID}")
+    @GetMapping("/view/student/{studentID}")
     public Iterable<Grades> findGradesByStudentID(@PathVariable Integer studentID) {
         return gradesRepository.findGradesByStudentID(studentID);
     }
-    @DeleteMapping("/find/{gid}")
-    public void deleteCourseByCourseID(@PathVariable("gid") Integer gid) {
+    @DeleteMapping("/delete/{gid}")
+    public String deleteCourseByCourseID(@PathVariable("gid") Integer gid) {
         gradesRepository.deleteById(gid);
+        return "Grade deleted from database";
     }
-    @PutMapping("/find/{gid}")
-    public String updateGradesByGID(@PathVariable("gid") Integer gid,
-                                         @RequestParam String grade) {
-        Grades grades = gradesRepository.findById(gid)
+    @PutMapping("/modify/{gid}")
+    public Grades updateGradesByGID(@PathVariable("gid") Integer gid,
+                                         @RequestBody Grades grades) {
+        Grades updatedGrades;
+        updatedGrades = grades;
+        grades = gradesRepository.findById(gid)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id: "+gid));
-        grades.setGrade(grade);
-        gradesRepository.save(grades);
-        return "Updated grade!";
+        grades.setGrade(updatedGrades.getGrade());
+        return gradesRepository.save(grades);
     }
 }
