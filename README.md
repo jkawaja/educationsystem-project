@@ -1,4 +1,4 @@
-# educationsystem-project
+# EducationSystem-project
 
 Create a RESTful web service, using Spring, that will provide these capabilities to the College. 
 The system will extend from work completed in Part 1, and should be able to continue with the 
