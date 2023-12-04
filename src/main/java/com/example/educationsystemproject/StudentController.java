@@ -13,23 +13,8 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @PostMapping("/add")
-    public String addStudent(@RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam String email,
-                             @RequestParam String address,
-                             @RequestParam String city,
-                             @RequestParam String postal,
-                             @RequestParam String phone) {
-        Student student = new Student();
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setEmail(email);
-        student.setAddress(address);
-        student.setCity(city);
-        student.setPostal(postal);
-        student.setPhone(phone);
-        studentRepository.save(student);
-        return "Added new student to database!";
+    public Student addStudent(@RequestBody Student student) {
+        return studentRepository.save(student);
     }
 
     @GetMapping("/list")
@@ -46,24 +31,17 @@ public class StudentController {
         return "Student deleted from database";
     }
     @PutMapping("/modify/{studentID}")
-    public String updateStudentByStudentID(@PathVariable("studentID") Integer studentID,
-                                         @RequestParam String firstName,
-                                         @RequestParam String lastName,
-                                         @RequestParam String email,
-                                         @RequestParam String address,
-                                         @RequestParam String city,
-                                         @RequestParam String postal,
-                                         @RequestParam String phone) {
-        Student student = studentRepository.findById(studentID)
+    public Student updateStudentByStudentID(@PathVariable("studentID") Integer studentID,
+                                         @RequestBody Student student) {
+        Student updatedStudent;
+        updatedStudent = student;
+        student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id: "+studentID));
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setEmail(email);
-        student.setAddress(address);
-        student.setCity(city);
-        student.setPostal(postal);
-        student.setPhone(phone);
-        studentRepository.save(student);
-        return "Student record updated.";
+        student.setEmail(updatedStudent.getEmail());
+        student.setAddress(updatedStudent.getAddress());
+        student.setCity(updatedStudent.getCity());
+        student.setPostal(updatedStudent.getPostal());
+        student.setPhone(updatedStudent.getPhone());
+        return studentRepository.save(student);
     }
 }
