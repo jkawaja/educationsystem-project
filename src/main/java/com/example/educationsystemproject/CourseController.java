@@ -12,15 +12,8 @@ public class CourseController {
     private CourseRepository courseRepository;
 
     @PostMapping("/add")
-    public String addCourse(@RequestParam String courseName,
-                             @RequestParam String courseNumber,
-                             @RequestParam String capacity) {
-        Course course = new Course();
-        course.setCourseName(courseName);
-        course.setCourseNumber(courseNumber);
-        course.setCapacity(capacity);
-        courseRepository.save(course);
-        return "Added new course to database!";
+    public Course addCourse(@RequestBody Course course) {
+        return courseRepository.save(course);
     }
 
     @GetMapping("/list")
@@ -32,20 +25,21 @@ public class CourseController {
         return courseRepository.findCourseByCourseID(courseID);
     }
     @DeleteMapping("/delete/{courseID}")
-    public void deleteCourseByCourseID(@PathVariable("courseID") Integer courseID) {
+    public String deleteCourseByCourseID(@PathVariable("courseID") Integer courseID) {
         courseRepository.deleteById(courseID);
+        return "Course deleted from database";
     }
     @PutMapping("/modify/{courseID}")
-    public String updateCourseByCourseID(@PathVariable("courseID") Integer courseID,
-                            @RequestParam String courseName,
-                            @RequestParam String courseNumber,
-                            @RequestParam String capacity) {
-        Course course = courseRepository.findById(courseID)
+    public Course updateCourseByCourseID(@PathVariable("courseID") Integer courseID,
+                            @RequestBody Course course) {
+        Course updatedCourse;
+        updatedCourse = course;
+        course = courseRepository.findById(courseID)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id: "+courseID));
-        course.setCourseName(courseName);
-        course.setCourseNumber(courseNumber);
-        course.setCapacity(capacity);
-        courseRepository.save(course);
-        return "Updated course!";
+        course.setCapacity(updatedCourse.getCapacity());
+        course.setYear(updatedCourse.getYear());
+        course.setSemester(updatedCourse.getSemester());
+        course.setPid(updatedCourse.getPid());
+        return courseRepository.save(course);
     }
 }
