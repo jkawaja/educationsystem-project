@@ -25,11 +25,11 @@ public class GradesController {
         return gradesRepository.findGradesBygid(gid);
     }
 
-    @GetMapping("/view/course/{courseID}")
+    @GetMapping("/list/course/{courseID}")
     public Iterable<Grades> findGradesByCourseID(@PathVariable Integer courseID) {
         return gradesRepository.findGradesByCourseID(courseID);
     }
-    @GetMapping("/view/student/{studentID}")
+    @GetMapping("/list/student/{studentID}")
     public Iterable<Grades> findGradesByStudentID(@PathVariable Integer studentID) {
         return gradesRepository.findGradesByStudentID(studentID);
     }

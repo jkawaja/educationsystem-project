@@ -24,11 +24,11 @@ public class EnrollmentController {
     public Enrollment findEnrollmentByEID(@PathVariable Integer eid) {
         return enrollmentRepository.findEnrollmentByeid(eid);
     }
-    @GetMapping("/view/course/{courseID}")
+    @GetMapping("/list/course/{courseID}")
     public Iterable<Enrollment> findEnrollmentByCourseID(@PathVariable Integer courseID) {
         return enrollmentRepository.findEnrollmentByCourseID(courseID);
     }
-    @GetMapping("/view/student/{studentID}")
+    @GetMapping("/list/student/{studentID}")
     public Iterable<Enrollment> findEnrollmentByStudentID(@PathVariable Integer studentID) {
         return enrollmentRepository.findEnrollmentByStudentID(studentID);
     }
